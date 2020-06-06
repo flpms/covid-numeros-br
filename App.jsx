@@ -58,6 +58,11 @@ class App extends Component {
       <div className="dashboard container-fluid">
         <h1>Números de Covid19 no Brasil</h1>
         
+        <p>
+          Essa página consulta diretamente os dados do Ministério da Saúde<br />
+          Por esse motivo pode apresentar inconsistencias.
+        </p>
+
         <div className="card">
           <Panel title="Confirmados" data={
             (this.state.numbers && this.state.numbers.confirmados)
