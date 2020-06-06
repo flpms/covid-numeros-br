@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import SaudeAPI from './app/services/saude-api';
+import SaudeAPI from './app/services/saude-api-v2';
 import {Panel} from './app/components/panel';
 import {SpreadSheat} from './app/components/spreadsheet';
 
@@ -22,10 +22,22 @@ class App extends Component {
       this.setState({
         load: true
       });
-      const result = await SaudeAPI();
-      const numbers = await result.json();
+      
+      const [geral, geralV2] = await Promise.all([
+        SaudeAPI.geral(),
+        SaudeAPI.geralV2()
+      ]);
+  
+      const [numbers, { results: [results]}] = await Promise.all([
+        geral.json(),
+        geralV2.json(),
+      ]);
 
       this.setState({
+        planilhas: {
+          arquivo: results.arquivo,
+          arquivo_srag: results.arquivo_srag
+        },
         planilha: numbers.planilha,
         numbers: numbers,
         load: false
@@ -76,12 +88,24 @@ class App extends Component {
         </div>
 
         {this.state.planilha && <SpreadSheat 
+          title={"v1"}
           userId={this.state.planilha.usuario_id}
           name={this.state.planilha.nome}
           user={this.state.planilha.usuario}
           file={this.state.planilha.arquivo}
         />}
 
+        {this.state.planilhas && <SpreadSheat
+          title={`v2 - XLSX`}
+          name={this.state.planilhas.arquivo.name}
+          file={this.state.planilhas.arquivo}
+        />}
+
+        {this.state.planilhas && <SpreadSheat
+          title={`v2 - CSV SRAG`}
+          name={this.state.planilhas.arquivo_srag.name}
+          file={this.state.planilhas.arquivo_srag}
+        />}
       </div>
     )
   }
