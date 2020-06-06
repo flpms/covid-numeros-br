@@ -1,0 +1,31 @@
+{
+  "name": "virus-spread",
+  "version": "1.0.0",
+  "description": "virus spread simulation, help to understand some numbers",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html -d docs",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/flpms/virus-spread.git"
+  },
+  "author": "Filipe M. Silva (@flpms)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/flpms/virus-spread/issues"
+  },
+  "homepage": "https://github.com/flpms/virus-spread#readme",
+  "dependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.10.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "regenerator-runtime": "^0.13.5"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.10.2",
+    "cssnano": "^4.1.10"
+  }
+}
