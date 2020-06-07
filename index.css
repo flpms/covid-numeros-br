@@ -9,6 +9,12 @@ body {
   background-color: #e2e2e2;
 }
 
+.github-ribbon {
+  position: fixed;
+  right: 0;
+  z-index: 1;
+}
+
 .dashboard h1{
   font-size: 2rem;
   line-height: 3.25rem;
