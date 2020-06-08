@@ -8,6 +8,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
+      hasError: false
     };
 
     return this;
@@ -45,17 +46,28 @@ class App extends Component {
     } catch(e) {
       console.error(e);
       this.setState({
+        hasError: true,
         error: {
           message: 'Não foi possivel carregar dados',
-          err
+          e
         }
       });
     }
   } 
 
+  static getDerivedStateFromError(error) {
+    // Update state so the next render will show the fallback UI.
+    return { hasError: true };
+  }
+
+  componentDidCatch(error, errorInfo) {
+    // You can also log the error to an error reporting service
+    logErrorToMyService(error, errorInfo);
+  }
+
   render() {
 
-    if (this.state.error) {
+    if (this.state.hasError) {
       return <>
         <p>{this.state.error.message}</p>
         <code>{this.state.error.err}</code>
@@ -95,13 +107,13 @@ class App extends Component {
           file={this.state.planilha.arquivo}
         />}
 
-        {this.state.planilhas && <SpreadSheat
+        {this.state.planilhas && this.state.planilhas.arquivo && <SpreadSheat
           title={`v2 - XLSX`}
           name={this.state.planilhas.arquivo.name}
           file={this.state.planilhas.arquivo}
         />}
 
-        {this.state.planilhas && <SpreadSheat
+        {this.state.planilhas && this.state.planilhas.arquivo_srag && <SpreadSheat
           title={`v2 - CSV SRAG`}
           name={this.state.planilhas.arquivo_srag.name}
           file={this.state.planilhas.arquivo_srag}
